@@ -1,0 +1,70 @@
+body {
+    background: transparent url('../images/bg.gif') repeat 0 0;
+}
+
+header {
+    background: #052636;
+}
+
+header nav > ul {
+    list-style: none;
+    margin: 0;
+    text-align: center;
+}
+
+header nav li {
+    display: inline-block;
+    padding: 5px;
+    font: 700 14px 'PT Sans', sans-serif;
+}
+
+header nav a {
+    color: #fff;
+    line-height: 32px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+article {
+    width: 960px;
+    margin: 10px auto;
+    padding: 10px;
+    background: #fff;
+}
+
+section {
+    background: #d4eff4;
+    margin: 10px 0 0;
+    padding: 10px;
+}
+
+section > h2 {
+    color: #0181ad;
+    padding: 2px;
+    font: 24px 'Cuprum', Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+}
+
+#about > img {
+    width: 940px;
+}
+
+section p::first-letter {
+    font-size: 140%;
+}
+
+a {
+    color: #2765ad;
+}
+
+a:hover {
+    color: #ad4f05;
+}
+
+.emphatic {
+    background-color: #b7eff4;
+    font-size: 120%;
+}
+
+label:after {
+    content: ':'
+}

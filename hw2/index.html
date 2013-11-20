@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon" >
+
+    <link href="css/reset.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="#about">about</a></li>
+            <li><a href="#faq">faq</a></li>
+            <li><a href="#contacts">contacts</a></li>
+            <li><a href="#register">register</a></li>
+        </ul>
+    </nav>
+</header>
+
+<article>
+    <h1>People</h1>
+
+    <p>text about people</p>
+
+    <section id="about">
+        <h2>About</h2>
+
+        <p>Why you want to try WebStorm</p>
+        <img src="http://www.jetbrains.com/webstorm/img/webstorm-ejs-stylus-dark.png" alt="image"/>
+        <div>
+            <h3>Code editor with an IQ of its own</h3>
+
+            <p>The editor understands your code, its structure and offers you code completion that you expect. Full
+                coding assistance is offered even for language mixtures such as HTML inside JavaScript strings.</p>
+        </div>
+        <div>
+            <h3>Code quality analysis</h3>
+
+            <p>Hundreds of language specific code inspections analyse the whole project as you type and show you the
+                identified problems before you open the browser. Intelligent quick-fixes offer instant solutions.</p>
+        </div>
+        <div>
+            <h3>Transparent VCS integration</h3>
+
+            <p>Git, SVN, Mercurial are just the top 3 that WebStorm supports. The unified UI helps you do your job no
+                matter where you keep your code. Local history keeps your files safe even if you use no VCS.</p>
+        </div>
+        <div>
+            <h3>Endless productivity growth potential</h3>
+
+            <p>Built-in tools like Terminal, REST Client and npm are at your fingertips for efficient development.
+                You’ll love keyboard access to any IDE action, not to mention the killer Live Edit feature.</p>
+        </div>
+    </section>
+
+    <section id="faq">
+        <h2>FAQ</h2>
+
+        <ul>
+            <li>
+                <blockquote>What does your "per concurrent user" licensing mean?</blockquote>
+                <comment>A single license permits the use of IntelliJ IDEA by a single user at a time. For multiple
+                    concurrent
+                    sessions you must purchase multiple licenses.
+                </comment>
+            </li>
+            <li>
+                <blockquote>How does the IntelliJ IDEA license work?</blockquote>
+                <comment>Each IntelliJ IDEA license is associated with a unique key-code registered under your user name
+                    that allows you to access the software.
+                </comment>
+            </li>
+            <li>
+                <blockquote>My company will have multiple developers using IntelliJ IDEA. Should we license IntelliJ
+                    IDEA to each developer personally?
+                </blockquote>
+                <comment>If you are purchasing IntelliJ IDEA for a company, you should register all your licenses in the
+                    company name. That way, no personal registration is required and any employee or contractor can use
+                    one of your company-registered licenses. See also: Can we continue using the license of a developer
+                    who is no longer with our company?.
+                </comment>
+            </li>
+        </ul>
+    </section>
+
+    <section id="contacts">
+        <h2>Contacts</h2>
+
+        <div class="vcard">Founder
+            <address class="author">
+                <em class="fn"><a title="Posts by Jack Osborne" href="#">Jack Osborne</a></em>
+            </address>
+        </div>
+        <div class="vcard">Designer
+            <address class="author">
+                <em class="fn"><a title="Posts by Jack Osborne" href="#">John Smith</a></em>
+            </address>
+        </div>
+    </section>
+
+    <section id="register">
+        <h2>Register</h2>
+
+        <form action="/register" method="post">
+            <p>
+                <label for="email"> Your email</label>
+                <input id="email" name="email" required="required" type="email" placeholder="mysupermail@mail.com"/>
+            </p>
+
+            <p>
+                <label for="password">Your password </label>
+                <input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO"/>
+            </p>
+
+            <p>
+                <label for="password_confirm">Please confirm your password </label>
+                <input id="password_confirm" name="password_confirm" required="required" type="password"
+                       placeholder="eg. X8df!90EO"/>
+            </p>
+
+            <p>
+                <input type="submit" value="Sign up"/>
+            </p>
+
+            <p>
+                Already a member ?
+                <a href="#login"> Go and log in </a>
+            </p>
+        </form>
+    </section>
+
+    <section id="feedback" class="emphatic">
+        <h2>Feedback</h2>
+
+        <form action="/feedback" method="post">
+            <p>
+                <label for="message"> Message</label>
+                <textarea id="message" name="message" required="required" placeholder="mysupermail@mail.com"></textarea>
+            </p>
+
+            <p>
+                <input type="submit" value="Send"/>
+            </p>
+        </form>
+    </section>
+</article>
+
+<footer>
+    <p>Posted by: Hege Refsnes</p>
+
+    <p>Contact information: <a href="mailto:someone@example.com"> someone@example.com</a>.</p>
+
+    <nav>
+        <ul>
+            <li><a href="#about">about</a></li>
+            <li><a href="#faq">faq</a></li>
+            <li><a href="#contacts">contacts</a></li>
+            <li><a href="#register">register</a></li>
+        </ul>
+    </nav>
+
+    <p>© 2013 Woofer Dog Corporation</p>
+</footer>
+
+</body>
+</html>
