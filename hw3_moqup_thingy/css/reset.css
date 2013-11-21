@@ -10,7 +10,7 @@ p {
     font-size: 16px;
 }
 
-ul, li, h2, footer, p {
+ul, li, h2, footer {
     margin: 0;
     padding: 0;
 }
