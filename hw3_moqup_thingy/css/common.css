@@ -6,7 +6,7 @@ header, article, footer {
 header nav > ul {
     list-style: none;
     overflow: hidden;
-    padding: 5px 0;
+    padding: 3px 0;
     margin-bottom: 2px;
     border: 2px solid #000000;
     background: #cccccc;
@@ -48,6 +48,16 @@ h2 {
     text-align: center;
 }
 
+iframe {
+    /*float: left;*/
+    border: 1px solid #000000;
+    margin: 10px;
+}
+
+.contacts-wrapper > * {
+    display: inline-block;
+}
+
 .subscribe-form {
     width: 250px;
     margin: 10px auto;
@@ -81,6 +91,10 @@ h2 {
 .wrapper > div:first-child {
     background: #3a3a3a;
 }
+
+
+
+
 
 footer nav > ul {
     list-style: none;
