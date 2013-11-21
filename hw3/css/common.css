@@ -1,0 +1,78 @@
+header, article, footer {
+    width: 960px;
+    margin: 0 auto;
+}
+
+header nav > ul {
+    list-style: none;
+    margin: 0;
+    text-align: center;
+}
+
+header nav li {
+    display: inline-block;
+    padding: 10px;
+    border: solid 2px black;
+    font-size: 24px;
+    width: 22%;
+}
+
+section {
+    padding: 10px 25px;
+    border: 2px solid black;
+}
+
+h2 {
+    text-align: center;
+}
+
+.subscribe-form {
+    width: 250px;
+    margin: 10px auto;
+    text-align: right;
+}
+
+.subscribe-form label {
+    /*width: 40px;*/
+    /*margin: 10px 0;*/
+    display: block;
+}
+
+.subscribe-form input[type=text], .subscribe-form input[type=email] {
+    width: 180px;
+}
+
+.subscribe-form input[type=checkbox] {
+    text-align: left;
+}
+
+.wrapper {
+    border: 2px solid black;
+}
+
+.wrapper > div {
+    width: 44%;
+    padding: 10px 25px;
+    display: inline-block;
+}
+
+.wrapper > div:first-child {
+    background: #3a3a3a;
+}
+
+footer nav > ul {
+    list-style: none;
+}
+
+footer nav li {
+    padding: 5px;
+}
+
+footer nav a {
+    color: #d02424;
+}
+
+footer .copyright {
+    text-align: center;
+    /*margin:  0 auto;*/
+}

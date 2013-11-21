@@ -1,0 +1,16 @@
+* {
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+p {
+    font-size: 16px;
+}
+
+ul, li, h2, footer, p {
+    margin: 0;
+    padding: 0;
+}
