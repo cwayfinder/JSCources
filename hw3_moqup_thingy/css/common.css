@@ -38,6 +38,13 @@ header li:last-child a {
     border-width: 2px 0 2px 2px;
 }
 
+header li a > span {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    margin-right: 3px;
+}
+
 
 
 section {
@@ -69,6 +76,13 @@ iframe {
 .contacts-wrapper > * {
     display: inline-block;
     vertical-align: top;
+}
+
+.contacts-wrapper p > span {
+    display: inline-block;
+    height: 24px;
+    margin-right: 10px;
+    width: 24px;
 }
 
 .subscribe-form {
@@ -133,54 +147,26 @@ footer .copyright {
 
 
 .icon-home {
-    display: inline-block;
-    height: 24px;
-    width: 24px;
     background: url("../img/home.gif") no-repeat;
-    margin-right: 3px;
 }
 .icon-faq {
-    display: inline-block;
-    height: 24px;
-    width: 24px;
     background: url("../img/faq.gif")no-repeat;
-    margin-right: 3px;
 }
 .icon-contacts {
-    display: inline-block;
-    height: 24px;
-    width: 24px;
     background: url("../img/contacts.gif") no-repeat;
-    margin-right: 3px;
 }
 .icon-stay-in-touch {
-    display: inline-block;
-    height: 24px;
-    width: 24px;
     background: url("../img/stay_in_touch.gif") no-repeat;
-    margin-right: 3px;
 }
 
 .icon_address {
     background: url("../img/address.gif") no-repeat;
-    display: inline-block;
-    height: 24px;
-    margin-right: 10px;
-    width: 24px;
 }
 .icon_email {
     background: url("../img/email.gif") 0 5px no-repeat;
-    display: inline-block;
-    height: 24px;
-    margin-right: 10px;
-    width: 24px;
 }
 .icon_phone {
     background: url("../img/phone.gif") no-repeat;
-    display: inline-block;
-    height: 24px;
-    margin-right: 10px;
-    width: 24px;
 }
 
 .icon_feedback {
