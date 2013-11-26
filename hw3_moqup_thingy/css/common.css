@@ -73,13 +73,18 @@ iframe {
 .subscribe-form {
     width: 250px;
     margin: 10px auto;
-    text-align: right;
 }
 
 .subscribe-form label {
-    /*width: 40px;*/
-    /*margin: 10px 0;*/
     display: block;
+}
+
+.subscribe-form label * {
+    display: inline-block;
+}
+
+.subscribe-form label span {
+    width: 55px;
 }
 
 .subscribe-form input[type=text], .subscribe-form input[type=email] {
@@ -87,7 +92,7 @@ iframe {
 }
 
 .subscribe-form input[type=checkbox] {
-    text-align: left;
+    margin-left: 40px;
 }
 
 .wrapper {
