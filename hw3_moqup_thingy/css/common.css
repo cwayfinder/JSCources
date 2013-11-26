@@ -52,12 +52,12 @@ h2 {
 
 .figure-left {
     float: left;
-    margin: 1em 1em 1em 0;
+    margin: 1em 1em 0 0;
 }
 
 .figure-right {
     float: right;
-    margin: 1em 0 1em 1em;
+    margin: 0 0 1em 1em;
 }
 
 iframe {
@@ -68,6 +68,7 @@ iframe {
 
 .contacts-wrapper > * {
     display: inline-block;
+    vertical-align: top;
 }
 
 .subscribe-form {
@@ -95,23 +96,23 @@ iframe {
     margin-left: 40px;
 }
 
-.wrapper {
+
+
+
+footer .wrapper {
     border: 2px solid black;
 }
 
-.wrapper > div {
+footer .wrapper > div {
     padding: 10px 15px;
     width: calc(50% - 34px);
     display: inline-block;
+    vertical-align: top;
 }
 
-.wrapper > div:first-child {
+footer .wrapper > div:first-child {
     background: #3a3a3a;
 }
-
-
-
-
 
 footer nav > ul {
     list-style: none;
