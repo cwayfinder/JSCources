@@ -160,3 +160,32 @@ footer .copyright {
     background: url("../img/stay_in_touch.gif") no-repeat;
     margin-right: 3px;
 }
+
+.icon_address {
+    background: url("../img/address.gif") no-repeat;
+    display: inline-block;
+    height: 24px;
+    margin-right: 10px;
+    width: 24px;
+}
+.icon_email {
+    background: url("../img/email.gif") 0 5px no-repeat;
+    display: inline-block;
+    height: 24px;
+    margin-right: 10px;
+    width: 24px;
+}
+.icon_phone {
+    background: url("../img/phone.gif") no-repeat;
+    display: inline-block;
+    height: 24px;
+    margin-right: 10px;
+    width: 24px;
+}
+
+.icon_feedback {
+    height: 16px;
+    width: 16px;
+    display: inline-block;
+    background: url("../img/feed.gif");
+}
