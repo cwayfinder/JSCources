@@ -33,18 +33,27 @@ function isFunction(property) {
             }
             return this;
         },
-        css: function(name, value) {
-            if (isObject(name)) {
-                for(var p in name) {
-                    if (name.hasOwnProperty(p) && !isFunction(name[p])) {
-                        this.css(p, name[p]);
+        css: function() {
+            var self = this;
+            var args = [].slice.call(arguments);
+            var prop = arguments[0];
+
+            if (isObject(prop)) {
+                var duration = args[1];
+                for(var p in prop) {
+                    if (prop.hasOwnProperty(p) && !isFunction(prop[p])) {
+                        self.css(p, prop[p], duration);
                     }
                 }
+            } else {
+                var duration = args[2] || 0;
+                setTimeout(function() {
+                    for (var i = 0; i < self.elements.length; i++) {
+                        self.elements[i].style[prop] = args[1];
+                    }
+                }, duration);
             }
 
-            for (var i = 0; i < this.elements.length; i++) {
-                this.elements[i].style[name] = value;
-            }
             return this;
         }
     };
