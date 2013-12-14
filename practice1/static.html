@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Maps are cool.</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bower_components/gridism/gridism.css">
+
+</head>
+<body class="wrap">
+<div class="grid">
+    <div id='google-container' class="unit whole">
+        <img src="" alt="Google static mapy">
+        <span class="result"></span>
+
+    </div>
+    <div id="bing-container" class="unit whole">
+        Need special key for this.
+        <!-- <img src="http://dev.virtualearth.net/REST/v1/Imagery/Map/imagerySet/centerPoint/zoomLevel?mapSize=mapSiz" alt="Bing static mapy"> -->
+    </div>
+    <div id='ya-container' class="unit whole">
+        <img src="" alt="Яндекс карты">
+        <span class="result"></span>
+    </div>
+</div>
+
+
+
+
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<script>
+    var host = "http://maps.googleapis.com/maps/api/staticmap",
+            params = {
+                center: '50.419,30.51956',
+                zoom: 15,
+                size: '500x300',
+                maptype: 'roadmap',
+                sensor: false
+            },
+            markers = [
+                'color:blue%7Clabel:X%7C50.419%2C30.51956',
+                'color:red%7Clabel:R%7C50.421%2C30.51956'
+            ],
+            url = host + '?' + $.param(params) + '&markers=' + markers.join('&markers=')
+    $(document).on('ready', function(){
+        console.log('Hooray')
+        $('#google-container img').attr('src', url)
+    })
+</script>
+<script>
+    $(document).on('ready', function() {
+        var url = "http://static-maps.yandex.ru/1.x",
+                params, markers
+
+        params = [
+            'll=30.519564,50.414778',
+            'spn=0.01,0.01',
+            'l=map',
+            'pt=30.519564,50.419,pmwtm1~30.519564,50.418,flag',
+        ]
+        url += '?' + params.join('&')
+        $('#ya-container img').attr('src', url)
+    })
+</script>
+</body>
+</html>
+
+<!-- Lat&Lng: 50.414778,30.519564 -->
+
+<!-- 
+Google static maps
+
+<script>
+document.ready = function() {
+    var url = "http://maps.googleapis.com/maps/api/staticmap",
+        params, markers
+$.param({})
+    params = {
+        center: '50.419,30.51956',
+        zoom: 15,
+        size: '500x300',
+        maptype: 'roadmap',
+        sensor: false
+        markers: []
+    }
+
+    markers = [
+        'color:blue%7Clabel:X%7C50.419%2C30.51956',
+        'color:red%7Clabel:R%7C50.421%2C30.51956'
+    ]
+
+    url += '?' + $.param(params) + '&markers=' + markers.join('&markers=')
+    $.get(url).
+        done(function(img, status, promise){
+            $('#google-container img').attr('src', 'url')
+            //var $img = $('<img/>').attr('src', url)
+            //$('#google-container').append($img)
+        }).
+        fail(function(response) {$('#google-container .result').text(response.statusText + ': ' + response.responseText)}).
+        always(function(){console.log('finished xhr')})
+}
+</script>
+
+<!-- ?l=map&amp;pt=37.6,55.6~37.601,55.6,78~37.602,55.6,pm2grl~37.603,55.6,pmrdm~37.604,55.6,pm2ntl3~37.605,55.6,pmors23~37.606,55.6,pmlbm34~37.607,55.6,pmywl99~37.608,55.6,pma&amp;key=ANpUFEkBAAAAf7jmJwMAHGZHrcKNDsbEqEVjEUtCmufxQMwAAAAAAAAAAAAvVrubVT4btztbduoIgTLAeFILaQ==  -->
+
+<!-- 
+ -->
