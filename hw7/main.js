@@ -2,6 +2,11 @@ function isObject(obj) {
     return typeof obj === "object";
 }
 
+function isFunction(property) {
+    var getType = {};
+    return property && getType.toString.call(property) === '[object Function]';
+}
+
 (function () {
     var my$ = function (params) {
         return new DomHelper(params);
@@ -10,22 +15,6 @@ function isObject(obj) {
     var DomHelper = function (selector) {
         this.selector = selector;
         this.elements = document.querySelectorAll(this.selector);
-//    this.element = document.querySelectorAll(selector);
-//    this.element.height = function (val) {
-//        for (var key in this) {
-//            if (this.hasOwnProperty(key) && isObject(this[key])) {
-//                this[key].style.height = val + "px";
-//            }
-//        }
-//    };
-//    this.element.width = function (val) {
-//        for (var key in this) {
-//            if (this.hasOwnProperty(key) && isObject(this[key])) {
-//                this[key].style.width = val + "px";
-//            }
-//        }
-//    };
-//    return this.element;
     };
 
     DomHelper.prototype = {
@@ -45,6 +34,14 @@ function isObject(obj) {
             return this;
         },
         css: function(name, value) {
+            if (isObject(name)) {
+                for(var p in name) {
+                    if (name.hasOwnProperty(p) && !isFunction(name[p])) {
+                        this.css(p, name[p]);
+                    }
+                }
+            }
+
             for (var i = 0; i < this.elements.length; i++) {
                 this.elements[i].style[name] = value;
             }
