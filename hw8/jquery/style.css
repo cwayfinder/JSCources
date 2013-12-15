@@ -74,11 +74,11 @@ input[type=range] {
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     background-color: #666;
-    /*-webkit-transition: background-color 0.8s ease-in;*/
-    /*-moz-transition: background-color 0.8s ease-in;*/
-    /*-ms-transition: background-color 0.8s ease-in;*/
-    /*-o-transition: background-color 0.8s ease-in;*/
-    /*transition: background-color 0.8s ease-in;*/
+    -webkit-transition: background-color 0.8s ease-in;
+    -moz-transition: background-color 0.8s ease-in;
+    -ms-transition: background-color 0.8s ease-in;
+    -o-transition: background-color 0.8s ease-in;
+    transition: background-color 0.8s ease-in;
     opacity: 0.5;
     width: 10px;
     height: 26px;
@@ -114,9 +114,9 @@ a.chameleon {
     /*transition: background-color 0.5s ease-in;*/
 }
 
-.chameleon:hover {
-    background-color: rgb(115, 134, 120);
-}
+/*.chameleon:hover {*/
+    /*background-color: rgb(115, 134, 120);*/
+/*}*/
 
 .chameleon:active {
     background-color: rgb(160, 255, 186);
