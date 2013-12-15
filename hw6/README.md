@@ -8,11 +8,15 @@
 Пример:
 
 //html
-<div id="container"><div class="child"></div><div class="child"></div><div class="anotherChild"></div></div>
+<div id="container">
+    <div class="child"></div>
+    <div class="child"></div>
+    <div class="anotherChild"></div>
+</div>
 
 //js
 var container = document.getElementById('container');
-container.delegate('.child', 'onclick', function(e){
+container.delegate('.child', 'click', function(e){
 	// the context 'this' should be equal the element, that fires event, i.e. child with class 'child'
 });
 
