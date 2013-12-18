@@ -2,8 +2,12 @@ $(function () {
     // accordion
     $('.tab-head').click(function () {
         var target = $(this).next(".tab-body"); // find section which should be expanded
-        target.stop().animate({ minHeight: "220px" }, 200, function () {});    // expand current section
-        $('.tab-body').not(target).stop().animate({ minHeight: "0" }, 200, function () {});    // collapse other sections
+        if (target.height() > 0) {
+            target.stop().animate({ minHeight: "0" }, 200, function () {});    // collapse current section
+        } else {
+            target.stop().animate({ minHeight: "220px" }, 200, function () {});    // expand current section
+            $('.tab-body').not(target).stop().animate({ minHeight: "0" }, 200, function () {});    // collapse other sections
+        }
     });
 
     // chameleon
