@@ -20,4 +20,20 @@ $(function () {
     chameleon.mouseup( function() {
         $(this).stop().animate({ backgroundColor: "rgb(115, 134, 120)" }, 500, function () {});
     });
+
+    //range
+    var position = $('.range').position();
+    var bounds = [position.left, position.top - 3, 200, position.top - 3];
+    var thumb = $('.range .thumb');
+
+    thumb.draggable({ containment: bounds });
+
+    thumb.mousedown( function() {
+        $(this).stop().animate({ backgroundColor: "red" }, 800, function () {});
+        $('.shutter').show();
+    });
+    $('body').mouseup( function() {
+        thumb.stop().animate({ backgroundColor: "#666" }, 800, function () {});
+        $('.shutter').hide();
+    });
 });
