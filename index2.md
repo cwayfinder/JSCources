@@ -1354,55 +1354,229 @@ for (Planet p : Planet.values()) {
 
 --
 
+## Annotations ##
 
-
---
-
-
+Annotations, a form of metadata, provide data about a program that is not part of the program itself. Annotations have no direct effect on the operation of the code they annotate.
 
 --
 
+Annotations have a number of uses, among them:
 
-
---
-
-
-
---
-
-
+- **Information for the compiler** — Annotations can be used by the compiler to detect errors or suppress warnings.
+- **Comple-time and deployment-time processing** — Software tools can process annotation information to generate code, XML files, and so forth.
+- **Runtime processing** — Some annotations are available to be examined at runtime.
 
 --
 
+```java
+@Override
+void mySuperMethod() { ... }
+```
 
+The annotation can include elements:
+
+```java
+@Author(
+   name = "Benjamin Franklin",
+   date = "3/27/2003"
+)
+class MyClass() { ... }
+```
+
+```java
+@SuppressWarnings(value = "unchecked")
+void myMethod() { ... }
+```
+
+If there is just one element named value, then the name can be omitted, as in:
+
+```java
+@SuppressWarnings("unchecked")
+void myMethod() { ... }
+```
 
 --
 
+## Interfaces ##
 
-
---
-
-
+There are a number of situations in software engineering when it is important for disparate groups of programmers to agree to a "contract" that spells out how their software interacts. Each group should be able to write their code without any knowledge of how the other group's code is written. Generally speaking, interfaces are such contracts.
 
 --
 
+In the Java programming language, an interface is a reference type, similar to a class, that can contain only *constants*, *method signatures*, *default methods*, *static methods*, and *nested types*. 
 
-
---
-
-
+Interfaces cannot be instantiated—they can only be implemented by classes or extended by other interfaces.
 
 --
 
+```java
+public interface OperateCar {
 
+   // constant declarations, if any
+
+   // method signatures
+   
+   // Direction is enum with values RIGHT, LEFT
+   int turn(Direction direction, double radius, 
+            double startSpeed, double endSpeed);
+
+   int changeLanes(Direction direction, 
+                   double startSpeed, double endSpeed);
+
+   int signalTurn(Direction direction, boolean signalOn);
+
+   int getRadarFront(double distanceToCar, double speedOfCar);
+
+   int getRadarRear(double distanceToCar, double speedOfCar);
+         ......
+   // more method signatures
+}
+```
 
 --
 
+```java
+public class OperateBMW760i implements OperateCar {
 
+    // the OperateCar method signatures, with implementation --
+    // for example:
+    int signalTurn(Direction direction, boolean signalOn) {
+       // code to turn BMW's LEFT turn indicator lights on
+       // code to turn BMW's LEFT turn indicator lights off
+       // code to turn BMW's RIGHT turn indicator lights on
+       // code to turn BMW's RIGHT turn indicator lights off
+    }
+
+    // other members, as needed -- for example, helper classes not 
+    // visible to clients of the interface
+}
+```
 
 --
 
+```java
+public interface GroupedInterface extends Interface1, Interface2, Interface3 {
 
+    // constant declarations
+    
+    // base of natural logarithms
+    double E = 2.718282;
+ 
+    // method signatures
+    void doSomething (int i, double x);
+    int doSomethingElse(String s);
+}
+```
+
+An interface can extend other interfaces, just as a class subclass or extend another class. However, whereas a class can extend only one other class, an interface can extend any number of interfaces.
+
+--
+remove?
+## A Sample Interface, Relatable ##
+
+```java
+public interface Relatable {
+        
+    // this (object calling isLargerThan)
+    // and other must be instances of 
+    // the same class returns 1, 0, -1 
+    // if this is greater // than, equal 
+    // to, or less than other
+    public int isLargerThan(Relatable other);
+}
+```
+
+--
+remove?
+```java
+public class Rectangle implements Relatable {
+	// fields
+	// constructors
+	// methods
+
+	// a method for computing
+    // the area of the rectangle
+    public int getArea() {
+        return width * height;
+    }
+    
+    // a method required to implement the Relatable interface
+    public int isLargerThan(Relatable other) {
+        RectanglePlus otherRect = (RectanglePlus)other;
+        if (this.getArea() < otherRect.getArea())
+            return -1;
+        else if (this.getArea() > otherRect.getArea())
+            return 1;
+        else
+            return 0;               
+    }
+}
+```
+
+--
+
+## Inheritance ##
+
+The idea of inheritance is simple but powerful: When you want to create a new class and there is already a class that includes some of the code that you want, you can derive your new class from the existing class. In doing this, you can reuse the fields and methods of the existing class.
+
+--
+
+```java
+public class Bicycle {
+        
+    // the Bicycle class has three fields
+    public int cadence;
+    public int gear;
+    public int speed;
+        
+    // the Bicycle class has one constructor
+    public Bicycle(int startCadence, int startSpeed, int startGear) {
+        gear = startGear;
+        cadence = startCadence;
+        speed = startSpeed;
+    }
+        
+    // the Bicycle class has setters and getters        
+}
+```
+
+--
+
+```java
+public class MountainBike extends Bicycle {
+        
+    // the MountainBike subclass adds one field
+    public int seatHeight;
+
+    // the MountainBike subclass has one constructor
+    public MountainBike(int startHeight, int startCadence,
+                        int startSpeed, int startGear) {
+        super(startCadence, startSpeed, startGear);
+        seatHeight = startHeight;
+    }   
+        
+    // the MountainBike subclass adds one method
+    public void setHeight(int newValue) {
+        seatHeight = newValue;
+    }   
+}
+```
+
+--
+
+## Casting Objects ##
+
+```java
+Object obj = new MountainBike();
+MountainBike myBike = obj;   // we would get a compile-time error
+MountainBike myBike = (MountainBike)obj;
+```
+
+```java
+if (obj instanceof MountainBike) {
+    MountainBike myBike = (MountainBike)obj;
+}
+```
 
 --
 
