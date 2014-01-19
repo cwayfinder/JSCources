@@ -1142,7 +1142,7 @@ Any method declared `void` doesn't return a value. It does not need to contain a
 
 --
 
-## Using this with a Field ##
+## Using `this` with a Field ##
 
 For example, the `Point` class was written like this
 
@@ -1150,8 +1150,7 @@ For example, the `Point` class was written like this
 public class Point {
     public int x = 0;
     public int y = 0;
-        
-    //constructor
+
     public Point(int a, int b) {
         x = a;
         y = b;
@@ -1165,8 +1164,7 @@ but it could have been written like this:
 public class Point {
     public int x = 0;
     public int y = 0;
-        
-    //constructor
+
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
@@ -1577,6 +1575,707 @@ if (obj instanceof MountainBike) {
     MountainBike myBike = (MountainBike)obj;
 }
 ```
+
+--
+
+## Overriding and Hiding Methods ##
+
+The distinction between hiding a static method and overriding an instance method has important implications:
+
+- The version of the overridden instance method that gets invoked is the one in the subclass.
+- The version of the hidden static method that gets invoked depends on whether it is invoked from the superclass or the subclass.
+
+--
+
+```java
+public class Animal {
+    public static void testClassMethod() {
+        System.out.println("The static method in Animal");
+    }
+    public void testInstanceMethod() {
+        System.out.println("The instance method in Animal");
+    }
+}
+```
+
+--
+
+```java
+public class Cat extends Animal {
+    public static void testClassMethod() {
+        System.out.println("The static method in Cat");
+    }
+    public void testInstanceMethod() {
+        System.out.println("The instance method in Cat");
+    }
+
+    public static void main(String[] args) {
+        Cat myCat = new Cat();
+        Animal myAnimal = myCat;
+        Animal.testClassMethod();
+        myAnimal.testInstanceMethod();
+    }
+}
+```
+
+The output from this program is as follows:
+
+```
+The static method in Animal
+The instance method in Cat
+```
+
+--
+
+## Polymorphism ##
+
+Subclasses of a class can define their own unique behaviors and yet share some of the same functionality of the parent class.
+
+--
+
+```java
+public class RoadBike extends Bicycle{
+    // In millimeters (mm)
+    private int tireWidth;
+
+    public RoadBike(int startCadence, int startSpeed,
+                    int startGear, int newTireWidth){
+        super(startCadence, startSpeed, startGear);
+        this.setTireWidth(newTireWidth);
+    }
+
+    public int getTireWidth(){
+      return this.tireWidth;
+    }
+
+    public void setTireWidth(int newTireWidth){
+        this.tireWidth = newTireWidth;
+    }
+
+    public void printDescription(){
+        super.printDescription();
+        System.out.println("The RoadBike has " + getTireWidth() + " MM tires.");
+    }
+}
+```
+
+--
+
+```java
+public class TestBikes {
+  public static void main(String[] args){
+    Bicycle bike01, bike02, bike03;
+
+    bike01 = new Bicycle(20, 10, 1);
+    bike02 = new MountainBike(20, 10, 5, "Dual");
+    bike03 = new RoadBike(40, 20, 8, 23);
+
+    bike01.printDescription();
+    bike02.printDescription();
+    bike03.printDescription();
+  }
+}
+```
+
+The following is the output from the test program:
+
+```
+Bike is in gear 1 with a cadence of 20 and travelling at a speed of 10. 
+
+Bike is in gear 5 with a cadence of 20 and travelling at a speed of 10. 
+The MountainBike has a Dual suspension.
+
+Bike is in gear 8 with a cadence of 40 and travelling at a speed of 20. 
+The RoadBike has 23 MM tires.
+```
+
+--
+
+## Hiding Fields ##
+
+Within a class, a field that has the same name as a field in the superclass hides the superclass's field, even if their types are different. Within the subclass, the field in the superclass cannot be referenced by its simple name. Instead, the field must be accessed through super.
+
+--
+
+## Accessing Superclass Members ##
+
+```java
+public class Superclass {
+    public void printMethod() {
+        System.out.println("Printed in Superclass.");
+    }
+}
+```
+
+```java
+public class Subclass extends Superclass {
+
+    // overrides printMethod in Superclass
+    public void printMethod() {
+        super.printMethod();
+        System.out.println("Printed in Subclass");
+    }
+    public static void main(String[] args) {
+        Subclass s = new Subclass();
+        s.printMethod();    
+    }
+}
+```
+Output:
+```
+Printed in Superclass.
+Printed in Subclass
+```
+
+--
+
+## Subclass Constructors ##
+
+```java
+public MountainBike(int startHeight, 
+                    int startCadence,
+                    int startSpeed,
+                    int startGear) {
+    super(startCadence, startSpeed, startGear);
+    seatHeight = startHeight;
+}  
+```
+Invocation of a superclass constructor must be the first line in the subclass constructor.
+
+The syntax for calling a superclass constructor is
+```java
+super(); 
+``` 
+or:
+```java
+super(parameter list);
+```
+
+--
+
+## Object as a Superclass ##
+
+The `Object` class, in the `java.lang` package, sits at the top of the class hierarchy tree. Every class is a descendant, direct or indirect, of the `Object` class. Every class you use or write inherits the instance methods of `Object`.
+
+--
+
+- `protected Object clone() throws CloneNotSupportedException`
+      Creates and returns a copy of this object.
+- `public boolean equals(Object obj)`
+      Indicates whether some other object is "equal to" this one.
+- `protected void finalize() throws Throwable`
+      Called by the garbage collector on an object when garbage
+      collection determines that there are no more references to the object
+- `public final Class getClass()`
+      Returns the runtime class of an object.
+- `public int hashCode()`
+      Returns a hash code value for the object.
+- `public String toString()`
+      Returns a string representation of the object.
+
+--
+
+- `public final void notify()`
+- `public final void notifyAll()`
+- `public final void wait()`
+- `public final void wait(long timeout)`
+- `public final void wait(long timeout, int nanos)`
+
+These methods of `Object` all play a part in synchronizing the activities of independently running threads in a program.
+
+--
+
+## The `clone()` Method ##
+
+If a class, or one of its superclasses, implements the `Cloneable` interface, you can use the `clone()` method to create a copy from an existing object. To create a clone, you write:
+
+```java
+aCloneableObject.clone();
+```
+
+--
+
+## The `equals()` Method ##
+
+The `equals()` method compares two objects for equality and returns true if they are equal.
+
+```java
+public class Book {
+    ...
+    public boolean equals(Object obj) {
+        if (obj instanceof Book)
+            return ISBN.equals((Book)obj.getISBN()); 
+        else
+            return false;
+    }
+}
+```
+
+```java
+Book firstBook  = new Book("0201914670");
+Book secondBook = new Book("0201914670");
+if (firstBook.equals(secondBook)) {
+    System.out.println("objects are equal");
+} else {
+    System.out.println("objects are not equal");
+}
+```
+
+You should always override the equals() method if the identity operator is not appropriate for your class.
+
+--
+
+## The `finalize()` Method ##
+
+The `Object` class provides a callback method, `finalize()`, that may be invoked on an object when it becomes garbage. `Object`'s implementation of `finalize()` does nothing—you can override `finalize()` to do cleanup, such as freeing resources.
+
+--
+
+## The `getClass()` Method ##
+
+You cannot override `getClass()`.
+
+The `getClass()` method returns a `Class` object, which you can use to get information about the class.
+
+For example, the following method gets and displays the class name of an object:
+
+```java
+void printClassName(Object obj) {
+    System.out.println("The object's" + " class is " +
+        obj.getClass().getSimpleName());
+}
+```
+
+--
+
+## The `hashCode()` Method ##
+
+The value returned by `hashCode()` is the object's hash code, which is the object's memory address in hexadecimal.
+
+By definition, if two objects are equal, their hash code must also be equal. If you override the `equals()` method, you change the way two objects are equated and `Object`'s implementation of `hashCode()` is no longer valid. Therefore, if you override the `equals()` method, you must also override the `hashCode()` method as well.
+
+--
+
+## The `toString()` Method ##
+
+You should always consider overriding the `toString()` method in your classes.
+
+You can use `toString()` along with `System.out.println()` to display a text representation of an object, such as an instance of Book:
+
+```java
+System.out.println(firstBook.toString());
+```
+which would, for a properly overridden `toString()` method, print something useful, like this:
+
+```
+ISBN: 0201914670; The Swing Tutorial; A Guide to Constructing GUIs, 2nd Edition
+```
+
+--
+
+## Final Classes and Methods ##
+
+```java
+class ChessAlgorithm {
+    enum ChessPlayer { WHITE, BLACK }
+    ...
+    final ChessPlayer getFirstPlayer() {
+        return ChessPlayer.WHITE;
+    }
+    ...
+}
+```
+
+Note that you can also declare an entire class final. A class that is declared final cannot be subclassed.
+
+--
+
+## Abstract Methods and Classes ##
+
+Abstract classes cannot be instantiated, but they can be subclassed.
+An abstract method is a method that is declared without an implementation (*without braces, and followed by a semicolon*)
+
+```java
+public abstract class GraphicObject {
+   // declare fields
+   // declare nonabstract methods
+   abstract void draw();
+}
+```
+
+When an abstract class is subclassed, the subclass usually provides implementations for all of the abstract methods in its parent class. However, if it does not, then the subclass must also be declared abstract.
+
+--
+
+
+
+--
+
+# Numbers and Strings #
+
+--
+
+## The Numbers Classes ##
+
+<img src="http://docs.oracle.com/javase/tutorial/figures/java/objects-numberHierarchy.gif" alt="The class hierarchy of Number." style="width: 50%;" />
+
+[API](http://docs.oracle.com/javase/7/docs/api/java/lang/Number.html)
+
+--
+
+## Formatting Numeric Print Output ##
+
+```java
+int i = 461012;
+System.out.format("The value of i is: %d%n", i);
+```
+
+The `%d` specifies that the single variable is a decimal integer. The `%n` is a platform-independent newline character. The output is:
+
+```
+The value of i is: 461012
+```
+
+There are many converters, flags, and specifiers, which are documented in [`java.util.Formatter`](http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html)
+
+--
+
+```java
+import java.util.Calendar;
+import java.util.Locale;
+
+public class TestFormat {
+    
+    public static void main(String[] args) {
+      long n = 461012;
+      System.out.format("%d%n", n);      //  -->  "461012"
+      System.out.format("%08d%n", n);    //  -->  "00461012"
+      System.out.format("%+8d%n", n);    //  -->  " +461012"
+      System.out.format("%,8d%n", n);    // -->  " 461,012"
+      System.out.format("%+,8d%n%n", n); //  -->  "+461,012"
+      
+      double pi = Math.PI;
+
+      System.out.format("%f%n", pi);       // -->  "3.141593"
+      System.out.format("%.3f%n", pi);     // -->  "3.142"
+      System.out.format("%10.3f%n", pi);   // -->  "     3.142"
+      System.out.format("%-10.3f%n", pi);  // -->  "3.142"
+      System.out.format(Locale.FRANCE,
+                        "%-10.4f%n%n", pi); // -->  "3,1416"
+
+      Calendar c = Calendar.getInstance();
+      System.out.format("%tB %te, %tY%n", c, c, c); // -->  "May 29, 2006"
+
+      System.out.format("%tl:%tM %tp%n", c, c, c);  // -->  "2:34 am"
+
+      System.out.format("%tD%n", c);    // -->  "05/29/06"
+    }
+}
+```
+
+--
+
+## The DecimalFormat Class ##
+
+You can use it to control the display of leading and trailing zeros, prefixes and suffixes, grouping (thousands) separators, and the decimal separator.
+
+--
+
+```java
+import java.text.*;
+
+public class DecimalFormatDemo {
+
+   static public void customFormat(String pattern, double value ) {
+      DecimalFormat myFormatter = new DecimalFormat(pattern);
+      String output = myFormatter.format(value);
+      System.out.println(value + "  " + pattern + "  " + output);
+   }
+
+   static public void main(String[] args) {
+      customFormat("###,###.###", 123456.789);
+      customFormat("###.##", 123456.789);
+      customFormat("000000.000", 123.78);
+      customFormat("$###,###.###", 12345.67);  
+   }
+}
+```
+
+The output is:
+
+```
+123456.789  ###,###.###  123,456.789
+123456.789  ###.##  123456.79
+123.78  000000.000  000123.780
+12345.67  $###,###.###  $12,345.67
+```
+
+--
+
+## The Math class ##
+
+The methods in the `Math` class are all static, so you call them directly from the class, like this:
+
+```java
+Math.cos(angle);
+```
+
+The Math class includes two constants:
+- `Math.E`, which is the base of natural logarithms, and
+- `Math.PI`, which is the ratio of the circumference of a circle to its diameter.
+
+The `Math` class also includes more than 40 static methods. 
+
+--
+
+```java
+public class BasicMathDemo {
+    public static void main(String[] args) {
+        double a = -191.635;
+        double b = 43.74;
+        int c = 16, d = 45;
+
+        System.out.printf("The absolute value " + "of %.3f is %.3f%n", 
+                          a, Math.abs(a));
+
+        System.out.printf("The ceiling of " + "%.2f is %.0f%n", 
+                          b, Math.ceil(b));
+
+        System.out.printf("The floor of " + "%.2f is %.0f%n", 
+                          b, Math.floor(b));
+
+        System.out.printf("The rint of %.2f " + "is %.0f%n", 
+                          b, Math.rint(b));
+
+        System.out.printf("The max of %d and " + "%d is %d%n",
+                          c, d, Math.max(c, d));
+
+        System.out.printf("The min of of %d " + "and %d is %d%n",
+                          c, d, Math.min(c, d));
+    }
+}
+```
+
+Here's the output from this program:
+
+```
+The absolute value of -191.635 is 191.635
+The ceiling of 43.74 is 44
+The floor of 43.74 is 43
+The rint of 43.74 is 44
+The max of 16 and 45 is 45
+The min of 16 and 45 is 16
+```
+
+--
+
+## Random Numbers ##
+
+The `random()` method returns a pseudo-randomly selected number between 0.0 and 1.0. The range includes 0.0 but not 1.0.
+
+To generate an integer between 0 and 9, you would write:
+
+```java
+int number = (int)(Math.random() * 10);
+```
+
+By multiplying the value by 10, the range of possible values becomes 0.0 <= number < 10.0.
+
+--
+
+## Characters ##
+
+The Java programming language provides a wrapper class that "wraps" the `char` in a `Character` object.
+
+You can create a Character object with the Character constructor:
+
+```java
+Character ch = new Character('a');
+```
+
+For a complete listing of all methods in this class (there are more than 50), refer to the [`java.lang.Character`](http://docs.oracle.com/javase/7/docs/api/java/lang/Character.html) API specification.
+
+--
+
+```java
+String greeting = "Hello world!";
+```
+
+
+```java
+char[] helloArray = { 'h', 'e', 'l', 'l', 'o', '.' };
+String helloString = new String(helloArray);
+System.out.println(helloString);
+```
+
+--
+
+## Creating Format Strings ##
+
+```java
+String fs;
+fs = String.format("The value of the float " +
+                   "variable is %f, while " +
+                   "the value of the " + 
+                   "integer variable is %d, " +
+                   " and the string is %s",
+                   floatVar, intVar, stringVar);
+System.out.println(fs);
+```
+
+--
+
+## Converting Strings to Numbers ##
+
+```java
+public class ValueOfDemo {
+    public static void main(String[] args) {
+
+        // this program requires two 
+        // arguments on the command line 
+        if (args.length == 2) {
+            // convert strings to numbers
+            float a = (Float.valueOf(args[0])).floatValue(); 
+            float b = (Float.valueOf(args[1])).floatValue();
+
+            // do some arithmetic
+            System.out.println("a + b = " +
+                               (a + b));
+            System.out.println("a - b = " +
+                               (a - b));
+            System.out.println("a * b = " +
+                               (a * b));
+            System.out.println("a / b = " +
+                               (a / b));
+            System.out.println("a % b = " +
+                               (a % b));
+        } else {
+            System.out.println("This program " +
+                "requires two command-line arguments.");
+        }
+    }
+}
+```
+
+--
+
+## Converting Numbers to Strings ##
+
+```java
+int i;
+// Concatenate "i" with an empty string; conversion is handled for you.
+String s1 = "" + i;
+```
+
+```java
+// The valueOf class method.
+String s2 = String.valueOf(i);
+```
+
+```java
+int i;
+double d;
+String s3 = Integer.toString(i); 
+String s4 = Double.toString(d); 
+```
+
+--
+
+```java
+public class ToStringDemo {
+    
+    public static void main(String[] args) {
+        double d = 858.48;
+        String s = Double.toString(d);
+        
+        int dot = s.indexOf('.');
+        
+        System.out.println(dot + " digits " +
+            "before decimal point.");
+        System.out.println( (s.length() - dot - 1) +
+            " digits after decimal point.");
+    }
+}
+```
+
+The output of this program is:
+
+```
+3 digits before decimal point.
+2 digits after decimal point.
+```
+
+--
+
+## The `StringBuilder` Class ##
+
+StringBuilder objects are like String objects, except that they can be modified. 
+
+```java
+public class StringBuilderDemo {
+    public static void main(String[] args) {
+        String palindrome = "Dot saw I was Tod";
+         
+        StringBuilder sb = new StringBuilder(palindrome);
+        
+        sb.reverse();  // reverse it
+        
+        System.out.println(sb);
+    }
+}
+```
+
+Running this program produces the same output:
+
+```
+doT saw I was toD
+```
+
+--
+
+## Autoboxing and Unboxing ##
+
+Autoboxing is the automatic conversion that the Java compiler makes between the primitive types and their corresponding object wrapper classes.
+
+```java
+Character ch = 'a';
+```
+
+If the conversion goes the other way, this is called unboxing.
+
+--
+
+
+
+--
+
+# Generics #
+
+Generics add stability to your code by making more of your bugs detectable at compile time.
+
+--
+
+
+
+--
+
+
+
+--
+
+
+
+--
+
+
+
+--
+
+
+
+--
+
+
 
 --
 
