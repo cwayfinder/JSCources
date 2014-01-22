@@ -2485,7 +2485,28 @@ public static <T extends Comparable<T>> int countGreaterThan(T[] anArray, T elem
 
 --
 
+## Target Types ##
 
+```java
+static <T> List<T> emptyList();
+```
+
+```java
+List<String> listOne = Collections.emptyList();
+```
+
+It is necessary to specify the value of T in the following context:
+
+```java
+void processStringList(List<String> stringList) {
+    // process stringList
+}
+```
+
+```java
+processStringList(Collections.emptyList()); // error in Java SE 7 or earlier
+processStringList(Collections.<String>emptyList());
+```
 
 --
 
