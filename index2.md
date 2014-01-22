@@ -2255,43 +2255,233 @@ Generics add stability to your code by making more of your bugs detectable at co
 
 --
 
+## Elimination of casts ##
 
+The following code snippet without generics requires casting:
 
---
+```java
+List list = new ArrayList();
+list.add("hello");
+String s = (String) list.get(0);
+```
 
+When re-written to use generics, the code does not require casting:
 
-
---
-
-
-
---
-
-
-
---
-
-
-
---
-
-
+```java
+List<String> list = new ArrayList<String>();
+list.add("hello");
+String s = list.get(0);   // no cast
+```
 
 --
 
+```
+public class Box {
+    private Object object;
 
+    public void set(Object object) { this.object = object; }
+    public Object get() { return object; }
+}
+```
+
+```java
+Box box = new Box();
+box.set("123");
+Integer value = (Integer) box.get();
+```
 
 --
 
+```java
+/**
+ * Generic version of the Box class.
+ * @param <T> the type of the value being boxed
+ */
+public class Box<T> {
+    // T stands for "Type"
+    private T t;
 
+    public void set(T t) { this.t = t; }
+    public T get() { return t; }
+}
+```
+
+```java
+Box<Integer> box = new Box<Integer>();
+box.set(123);
+Integer value = box.get();
+```
 
 --
 
+## The Diamond ##
 
+In Java SE 7 and later, you can replace the type arguments required to invoke the constructor of a generic class with an empty set of type arguments (<>) as long as the compiler can determine, or infer, the type arguments from the context. This pair of angle brackets, <>, is informally called the diamond.
+
+```java
+Box<Integer> integerBox = new Box<>();
+```
 
 --
 
+## Multiple Type Parameters ##
 
+```java
+public interface Pair<K, V> {
+    public K getKey();
+    public V getValue();
+}
+
+public class OrderedPair<K, V> implements Pair<K, V> {
+
+    private K key;
+    private V value;
+
+    public OrderedPair(K key, V value) {
+	this.key = key;
+	this.value = value;
+    }
+
+    public K getKey()	{ return key; }
+    public V getValue() { return value; }
+}
+```
+
+The following statements create two instantiations of the OrderedPair class:
+
+```
+Pair<String, Integer> p1 = new OrderedPair<String, Integer>("Even", 8);
+Pair<String, String>  p2 = new OrderedPair<String, String>("hello", "world");
+Pair<String, Box<Integer>> p = new OrderedPair<>("primes", new Box<Integer>(...));
+```
+
+--
+
+## Raw Types ##
+
+```java
+public class Box<T> {
+    public void set(T t) { /* ... */ }
+    // ...
+}
+```
+
+```java
+Box<Integer> intBox = new Box<>();	// parameterized type of Box<T>
+Box rawBox = new Box();				// raw type of Box<T>
+```
+
+The `@SuppressWarnings("unchecked")` annotation suppresses unchecked warnings. 
+
+--
+
+## Generic Methods ##
+
+```java
+public class Util {
+    // Generic static method
+    public static <K, V> boolean compare(Pair<K, V> p1, Pair<K, V> p2) {
+        return p1.getKey().equals(p2.getKey()) &&
+               p1.getValue().equals(p2.getValue());
+    }
+}
+
+public class Pair<K, V> {
+
+    private K key;
+    private V value;
+
+    // Generic constructor
+    public Pair(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    // Generic methods
+    public void setKey(K key) { this.key = key; }
+    public void setValue(V value) { this.value = value; }
+    public K getKey()   { return key; }
+    public V getValue() { return value; }
+}
+```
+
+The complete syntax for invoking this method would be:
+
+```java
+Pair<Integer, String> p1 = new Pair<>(1, "apple");
+Pair<Integer, String> p2 = new Pair<>(2, "pear");
+boolean same = Util.<Integer, String>compare(p1, p2);
+```
+
+```java
+boolean same = Util.compare(p1, p2);
+```
+
+--
+
+## Bounded Type Parameters ##
+
+```java
+public class NaturalNumber<T extends Integer> {
+
+    private T n;
+
+    public NaturalNumber(T n)  { this.n = n; }
+
+    public boolean isEven() {
+        return n.intValue() % 2 == 0;
+    }
+
+    // ...
+}
+```
+
+```java
+NaturalNumber<Integer> n = new NaturalNumber<>(new Integer(100));
+```
+
+--
+
+## Multiple Bounds ##
+
+A type parameter can have multiple bounds:
+
+
+```java
+<T extends B1 & B2 & B3>
+```
+
+A type variable with multiple bounds is a subtype of all the types listed in the bound. If one of the bounds is a class, it must be specified first. For example:
+
+```java
+Class A { /* ... */ }
+interface B { /* ... */ }
+interface C { /* ... */ }
+```
+
+```java
+class D <T extends A & B & C> { /* ... */ }
+```
+
+--
+
+## Generic Methods and Bounded Type Parameters ##
+
+```java
+public interface Comparable<T> {
+    public int compareTo(T o);
+}
+```
+
+```java
+public static <T extends Comparable<T>> int countGreaterThan(T[] anArray, T elem) {
+    int count = 0;
+    for (T e : anArray)
+        if (e.compareTo(elem) > 0)
+            ++count;
+    return count;
+}
+```
 
 --
 
