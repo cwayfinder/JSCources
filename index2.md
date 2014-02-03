@@ -2504,13 +2504,183 @@ void processStringList(List<String> stringList) {
 ```
 
 ```java
-processStringList(Collections.emptyList()); // error in Java SE 7 or earlier
 processStringList(Collections.<String>emptyList());
+processStringList(Collections.emptyList()); // error in Java SE 7 or earlier
 ```
 
 --
 
+## Upper Bounded Wildcards ##
 
+To declare an upper-bounded wildcard, use the wildcard character ('`?`'), followed by the `extends` keyword, followed by its upper bound. In this context, `extends` is used in a general sense to mean either "`extends`" (as in classes) or "`implements`" (as in interfaces).
+
+```java
+class MyClass {
+    public static void method1(List<? extends Number> list) { /* ... */ }
+    public static void method2(List<Number> list) { /* ... */ }
+}
+```
+
+```java
+List<Integer> list = Arrays.asList(1, 2, 3);
+MyClass.method1(list);
+MyClass.method2(list);    // compilation error
+```
+
+--
+
+```java
+public static double sumOfList(List<? extends Number> list) {
+    double s = 0.0;
+    for (Number n : list)
+        s += n.doubleValue();
+    return s;
+}
+```
+
+```java
+List<Integer> li = Arrays.asList(1, 2, 3);
+System.out.println("sum = " + sumOfList(li));
+
+List<Double> ld = Arrays.asList(1.2, 2.3, 3.5);
+System.out.println("sum = " + sumOfList(ld));
+```
+
+--
+
+## Unbounded Wildcards ##
+
+The unbounded wildcard type is specified using the wildcard character (`?`), for example, `List<?>`. This is called *a list of unknown type*.
+
+```java
+public static void printList(List<?> list) {
+    for (Object elem: list)
+        System.out.print(elem + " ");
+    System.out.println();
+}
+```
+
+```java
+List<Integer> li = Arrays.asList(1, 2, 3);
+List<String>  ls = Arrays.asList("one", "two", "three");
+printList(li);
+printList(ls);
+```
+
+--
+
+## Lower Bounded Wildcards ##
+
+A *lower bounded* wildcard restricts the unknown type to be a specific type or a super type of that type.
+
+```java
+public static void addIntegers(List<? super Integer> list){
+    list.add(new Integer(50));
+}
+```
+
+```java
+List<Integer> integers = Arrays.asList(1, 2, 3);
+addIntegers(integers);
+
+
+List<Object> objects = new ArrayList<>();
+addIntegers(objects);
+```
+
+--
+
+## Wildcards and Subtyping ##
+
+```java
+class A { /* ... */ }
+class B extends A { /* ... */ }
+```
+
+```java
+B b = new B();
+A a = b;
+```
+
+This rule does not apply to generic types:
+
+```java
+List<B> lb = new ArrayList<>();
+List<A> la = lb;   // compile-time error
+```
+
+--
+
+<img src="http://docs.oracle.com/javase/tutorial/figures/java/generics-listParent.gif" alt="diagram showing that the common parent of List<Number> and List<Integer> is the list of unknown type" style="width: 50%;"/>
+
+```java
+List<? extends Integer> intList = new ArrayList<>();
+List<? extends Number>  numList = intList;  // OK. 
+// List<? extends Integer> is a subtype of List<? extends Number>
+```
+
+--
+
+The following diagram shows the relationships between several List classes declared with both upper and lower bounded wildcards.
+
+<img src="http://docs.oracle.com/javase/tutorial/figures/java/generics-wildcardSubtyping.gif" alt="diagram showing that List<Integer> is a subtype of both List<? extends Integer> and List<?super Integer>. List<? extends Integer> is a subtype of List<? extends Number> which is a subtype of List<?>. List<Number> is a subtype of List<? super Number> and List>? extends Number>. List<? super Number> is a subtype of List<? super Integer> which is a subtype of List<?>." style="width: 50%;"/>
+
+--
+
+## Cannot Instantiate Generic Types with Primitive Types ##
+
+```java
+Pair<int, char> p = new Pair<>(8, 'a');  // compile-time error
+Pair<Integer, Character> p = new Pair<>(8, 'a');
+```
+
+Note that the Java compiler autoboxes 8 to Integer.valueOf(8) and 'a' to Character('a'):
+
+```java
+Pair<Integer, Character> p = new Pair<>(Integer.valueOf(8), new Character('a'));
+```
+
+--
+
+## Cannot Create Instances of Type Parameters ##
+
+```java
+public static <E> void append(List<E> list) {
+    E elem = new E();  // compile-time error
+    list.add(elem);
+}
+```
+
+As a workaround, you can create an object of a type parameter through reflection:
+
+```java
+public static <E> void append(List<E> list, Class<E> cls) throws Exception {
+    E elem = cls.newInstance();   // OK
+    list.add(elem);
+}
+```
+
+You can invoke the append method as follows:
+
+```java
+List<String> ls = new ArrayList<>();
+append(ls, String.class);
+```
+
+--
+
+## Overloading a Method with Parameter Types ##
+
+A class cannot have two overloaded methods that will have the same signature after type erasure.
+
+```java
+public class Example {
+    public void print(Set<String> strSet) { }
+    public void print(Set<Integer> intSet) { }
+}
+```
+
+The overloads would all share the same classfile representation and will generate a compile-time error.
 
 --
 
@@ -2518,71 +2688,96 @@ processStringList(Collections.<String>emptyList());
 
 --
 
+# Packages #
 
-
---
-
-
+A package is a grouping of related types providing access protection and name space management. Types refers to classes, interfaces, enumerations, and annotation types. 
 
 --
 
+## Reasons of using packages ##
 
-
---
-
-
-
---
-
-
+- You and other programmers can easily determine that these types are related.
+- You and other programmers know where to find types that can provide graphics-related functions.
+- The names of your types won't conflict with the type names in other packages because the package creates a new namespace.
+- You can allow types within the package to have unrestricted access to one another yet still restrict access for types outside the package.
 
 --
 
+## Creating a Package ##
 
+```java
+//in the Draggable.java file
+package graphics;
+public interface Draggable {
+    . . .
+}
+```
 
---
-
-
-
---
-
-
-
---
-
-
+If you do not use a package statement, your type ends up in an unnamed package. Generally speaking, an unnamed package is only for small or temporary applications or when you are just beginning the development process. Otherwise, classes and interfaces belong in named packages.
 
 --
 
+## Naming Conventions ##
 
+Package names are written in all lower case to avoid conflict with the names of classes or interfaces.
 
---
-
-
-
---
-
-
+Companies use their reversed Internet domain name to begin their package names—for example, `com.example.mypackage` for a package named `mypackage` created by a programmer at example.com.
 
 --
 
+You could use qualified name to create an instance of `graphics.Rectangle`:
 
+```java
+graphics.Rectangle myRect = new graphics.Rectangle();
+```
+
+or import it:
+
+```java
+import graphics.Rectangle;
+```
+
+Now you can refer to the Rectangle class by its simple name.
+
+```java
+Rectangle myRectangle = new Rectangle();
+```
 
 --
 
+## Importing an Entire Package ##
 
+To import all the types contained in a particular package, use the import statement with the asterisk (*) wildcard character.
 
---
-
-
-
---
-
-
+```java
+import graphics.*;
+```
 
 --
 
+## The Static Import Statement ##
 
+The static members of Math can be imported either individually:
+```java
+import static java.lang.Math.PI;
+```
+or as a group:
+```java
+import static java.lang.Math.*;
+```
+
+Once they have been imported, the static members can be used without qualification. For example, the previous code snippet would become:
+```java
+double r = cos(PI * theta);
+```
+
+--
+
+## Access Levels ##
+
+<img src="http://www.gotoquiz.com/web-coding/wp-content/uploads/2011/03/java-member-access-levels1.png" alt="Access Levels" style="width: 70%;"/>
+
+*no modifier is usually refered to as package-private.
 
 --
 
