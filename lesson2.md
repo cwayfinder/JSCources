@@ -96,26 +96,6 @@ class MyClass {
 The class body (the area between the braces) contains all the code that provides for the life cycle of the objects created from the class: constructors for initializing new objects, declarations for the fields that provide the state of the class and its objects, and methods to implement the behavior of the class and its objects.
 
 --
-remove?
-## Another class declaration ##
-
-```java
-class MyClass extends MySuperClass implements YourInterface {
-    // field, constructor, and
-    // method declarations
-}
-```
-
-`MyClass` is a subclass of `MySuperClass` and that it implements the YourInterface interface.
-
---
-
-## Access Modifiers ##
-
-- `public` modifier — the field is accessible from all classes.
-- `private` modifier — the field is accessible only within its own class.
-
---
 
 ## Defining Methods ##
 
@@ -269,17 +249,6 @@ moveCircle(myCircle, 23, 56);
 
 --
 
-## Exercise ##
-
-[Here's a link](http://blabla).
-
-1. Look at example.
-2. Create class `Square`.
-3. Create several instances of class `Square`.
-4. Print info about them.
-
---
-
 ## Initializing an Object ##
 
 ```java
@@ -402,11 +371,6 @@ public class Rectangle {
 
 --
 
-remove?
-## Access Levels ##
-
---
-
 ## Static fields ##
 
 ```java
@@ -463,7 +427,7 @@ static final double PI = 3.141592653589793;
 By convention, the names of constant values are spelled in uppercase letters. If the name is composed of more than one word, the words are separated by an underscore (_).
 
 --
-remove?
+
 ## Static Initialization Blocks ##
 
 ```java
@@ -552,3 +516,96 @@ for (Planet p : Planet.values()) {
     System.out.printf("Your weight on %s is %f%n", p, p.surfaceWeight(mass));
 }
 ```
+
+--
+
+# Packages #
+
+A package is a grouping of related types providing access protection and name space management. Types refers to classes, interfaces, enumerations, and annotation types. 
+
+--
+
+## Reasons of using packages ##
+
+- You and other programmers can easily determine that these types are related.
+- You and other programmers know where to find types that can provide graphics-related functions.
+- The names of your types won't conflict with the type names in other packages because the package creates a new namespace.
+- You can allow types within the package to have unrestricted access to one another yet still restrict access for types outside the package.
+
+--
+
+## Creating a Package ##
+
+```java
+//in the Draggable.java file
+package graphics;
+public interface Draggable {
+    . . .
+}
+```
+
+If you do not use a package statement, your type ends up in an unnamed package. Generally speaking, an unnamed package is only for small or temporary applications or when you are just beginning the development process. Otherwise, classes and interfaces belong in named packages.
+
+--
+
+## Naming Conventions ##
+
+Package names are written in all lower case to avoid conflict with the names of classes or interfaces.
+
+Companies use their reversed Internet domain name to begin their package names—for example, `com.example.mypackage` for a package named `mypackage` created by a programmer at example.com.
+
+--
+
+You could use qualified name to create an instance of `graphics.Rectangle`:
+
+```java
+graphics.Rectangle myRect = new graphics.Rectangle();
+```
+
+or import it:
+
+```java
+import graphics.Rectangle;
+```
+
+Now you can refer to the Rectangle class by its simple name.
+
+```java
+Rectangle myRectangle = new Rectangle();
+```
+
+--
+
+## Importing an Entire Package ##
+
+To import all the types contained in a particular package, use the import statement with the asterisk (*) wildcard character.
+
+```java
+import graphics.*;
+```
+
+--
+
+## The Static Import Statement ##
+
+The static members of Math can be imported either individually:
+```java
+import static java.lang.Math.PI;
+```
+or as a group:
+```java
+import static java.lang.Math.*;
+```
+
+Once they have been imported, the static members can be used without qualification. For example, the previous code snippet would become:
+```java
+double r = cos(PI * theta);
+```
+
+--
+
+## Access Levels ##
+
+<img src="http://www.gotoquiz.com/web-coding/wp-content/uploads/2011/03/java-member-access-levels1.png" alt="Access Levels" style="width: 70%;"/>
+
+*no modifier is usually refered to as package-private.
